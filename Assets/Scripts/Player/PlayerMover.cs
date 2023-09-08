@@ -10,7 +10,7 @@ namespace Player
         private const float Speed = 1.2f;
         private const float MinX = -2.75f;
         private const float MaxX = 2.75f;
-        private bool _isDragging = false;
+        private bool _isDragging;
         private Vector2 _startPos;
 
         public PlayerMover(IInputService inputService)
@@ -20,37 +20,35 @@ namespace Player
 
         public void UpdatePosMobile(Transform t)
         {
-            if (_inputService.OnClicked)
+            if (!_inputService.OnClicked) return;
+            Touch touch = Input.GetTouch(0);
+
+            switch (touch.phase)
             {
-                Touch touch = Input.GetTouch(0);
+                case TouchPhase.Began:
+                    _startPos = touch.position;
+                    _isDragging = true;
+                    break;
 
-                switch (touch.phase)
-                {
-                    case TouchPhase.Began:
+                case TouchPhase.Moved:
+                    if (_isDragging)
+                    {
+                        float deltaX = touch.position.x - _startPos.x;
+                        Vector3 position = t.position;
+                        float newX = position.x + deltaX * Speed * Time.deltaTime;
+                            
+                        newX = Mathf.Clamp(newX, MinX, MaxX);
+                            
+                        position = new Vector3(newX, position.y, position.z);
+                        t.position = position;
+
                         _startPos = touch.position;
-                        _isDragging = true;
-                        break;
+                    }
+                    break;
 
-                    case TouchPhase.Moved:
-                        if (_isDragging)
-                        {
-                            float deltaX = touch.position.x - _startPos.x;
-                            Vector3 position = t.position;
-                            float newX = position.x + deltaX * Speed * Time.deltaTime;
-                            
-                            newX = Mathf.Clamp(newX, MinX, MaxX);
-                            
-                            position = new Vector3(newX, position.y, position.z);
-                            t.position = position;
-
-                            _startPos = touch.position;
-                        }
-                        break;
-
-                    case TouchPhase.Ended:
-                        _isDragging = false;
-                        break;
-                }
+                case TouchPhase.Ended:
+                    _isDragging = false;
+                    break;
             }
         }
 

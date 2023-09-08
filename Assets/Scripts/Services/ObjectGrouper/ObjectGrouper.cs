@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Services.ObjectGrouper
@@ -22,18 +23,10 @@ namespace Services.ObjectGrouper
             }
         }
 
-        private List<Transform> GetNearbyObjects(Transform obj, List<Transform> objectsToGroup, float groupingRadius)
+        private List<Transform> GetNearbyObjects(Transform obj, IEnumerable<Transform> objectsToGroup, float groupingRadius)
         {
-            List<Transform> nearbyObjects = new List<Transform>();
-            foreach (Transform otherObj in objectsToGroup)
-            {
-                if (otherObj != obj && Vector3.Distance(obj.position, otherObj.position) <= groupingRadius)
-                {
-                    nearbyObjects.Add(otherObj);
-                }
-            }
-
-            return nearbyObjects;
+            return objectsToGroup.Where(otherObj =>
+                otherObj != obj && Vector3.Distance(obj.position, otherObj.position) <= groupingRadius).ToList();
         }
 
         public void CalculateGroupColliderSize(List<Transform> objectsToGroup, SphereCollider groupCollider)
@@ -48,10 +41,10 @@ namespace Services.ObjectGrouper
             Vector3 minPosition = objectsToGroup[0].position;
             Vector3 maxPosition = objectsToGroup[0].position;
 
-            foreach (Transform obj in objectsToGroup)
+            foreach (Vector3 objPosition in objectsToGroup.Select(obj => obj.position))
             {
-                minPosition = Vector3.Min(minPosition, obj.position);
-                maxPosition = Vector3.Max(maxPosition, obj.position);
+                minPosition = Vector3.Min(minPosition, objPosition);
+                maxPosition = Vector3.Max(maxPosition, objPosition);
             }
 
             Vector3 center = (minPosition + maxPosition) / 2f;

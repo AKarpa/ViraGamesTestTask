@@ -41,7 +41,7 @@ namespace Infrastructure.States
         {
             RegisterStaticData();
 
-            _services.RegisterSingle<IInputService>(InputService());
+            _services.RegisterSingle(InputService());
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
             _services.RegisterSingle<IObjectGrouper>(new ObjectGrouper());
             _services.RegisterSingle<IObjectMover>(new ObjectMover());
@@ -68,8 +68,7 @@ namespace Infrastructure.States
         {
             if (Application.isEditor)
                 return new StandaloneInputService();
-            else
-                return new MobileInputService();
+            return new MobileInputService();
         }
     }
 }

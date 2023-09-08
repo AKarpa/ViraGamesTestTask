@@ -24,8 +24,8 @@ namespace Enemy
         private IObjectMover _objectMover;
 
         private LevelStaticData _levelData;
-        private List<UpgradeWall.UpgradeWall> _upgradeWallPool = new List<UpgradeWall.UpgradeWall>();
-        private List<EnemySpot> _enemySpotPool = new List<EnemySpot>();
+        private List<UpgradeWall.UpgradeWall> _upgradeWallPool = new();
+        private List<EnemySpot> _enemySpotPool = new();
 
         private void Awake()
         {
@@ -52,7 +52,7 @@ namespace Enemy
 
         private List<UpgradeWall.UpgradeWall> SpawnUpgradeWall()
         {
-            List<UpgradeWall.UpgradeWall> newList = new List<UpgradeWall.UpgradeWall>();
+            List<UpgradeWall.UpgradeWall> newList = new();
 
             for (int i = 0; i < _levelData.UpgradeWallAmount; i++)
             {
@@ -67,7 +67,7 @@ namespace Enemy
 
         private List<EnemySpot> SpawnEnemySpot()
         {
-            List<EnemySpot> newList = new List<EnemySpot>();
+            List<EnemySpot> newList = new();
 
             for (int i = 0; i < _levelData.EnemySpotsAmount; i++)
             {
