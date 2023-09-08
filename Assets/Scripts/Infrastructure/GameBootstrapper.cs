@@ -4,17 +4,27 @@ using UnityEngine;
 
 namespace Infrastructure
 {
-  public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
-  {
-    public LoadingCurtain Curtain;
-    private Game _game;
-
-    private void Awake()
+    public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
     {
-      _game = new Game(this, Curtain);
-      _game.StateMachine.Enter<BootstrapState>();
+        [SerializeField] private LoadingCurtain curtain;
+        private Game _game;
 
-      DontDestroyOnLoad(this);
+        private static GameBootstrapper _instance;
+
+        private void Awake()
+        {
+            if (_instance == null)
+            {
+                _instance = this;
+                DontDestroyOnLoad(this);
+                
+                _game = new Game(this, curtain);
+                _game.StateMachine.Enter<BootstrapState>();
+            }
+            else if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
-  }
 }
