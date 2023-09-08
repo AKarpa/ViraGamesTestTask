@@ -16,7 +16,7 @@ namespace Enemy
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent<Player.Player>(out var player))
+            if (other.TryGetComponent<Player.Player>(out Player.Player player))
             {
                 _enemySpot.SetupFightTarget(player.transform.position);
                 StartCoroutine(_compareObjectListsService.CompareLists(_enemySpot, player));

@@ -15,12 +15,13 @@ namespace Services.ObjectGrouper
                 for (int i = 0; i < numNearbyObjects; i++)
                 {
                     float angle = i * angleBetweenObjects;
-                    Vector3 newPosition = obj.position + Quaternion.Euler(0, angle, 0) * Vector3.forward * groupingRadius;
+                    Vector3 newPosition =
+                        obj.position + Quaternion.Euler(0, angle, 0) * Vector3.forward * groupingRadius;
                     nearbyObjects[i].position = newPosition;
                 }
             }
         }
-    
+
         private List<Transform> GetNearbyObjects(Transform obj, List<Transform> objectsToGroup, float groupingRadius)
         {
             List<Transform> nearbyObjects = new List<Transform>();

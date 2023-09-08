@@ -19,20 +19,20 @@ namespace StaticData
                 .LoadAll<LevelStaticData>(ConfigsLevelStaticData)
                 .ToDictionary(x => x.levelIdKey, x => x);
 
-            _windowConfigs = Resources.Load<WindowStaticData>(ConfigsWindowStaticData).Configs.ToDictionary(x => x.WindowID, x=> x);
+            _windowConfigs = Resources.Load<WindowStaticData>(ConfigsWindowStaticData).Configs
+                .ToDictionary(x => x.WindowID, x => x);
         }
 
-        public LevelStaticData ForLevel(int levelIdKey) => 
+        public LevelStaticData ForLevel(int levelIdKey) =>
             _levels
-                .TryGetValue(levelIdKey, out LevelStaticData staticData) 
-                ? staticData 
-                : null;
-        
-        public WindowConfig ForWindow(WindowID window) => 
-            _windowConfigs
-                .TryGetValue(window, out WindowConfig windowConfig)
-                ? windowConfig 
+                .TryGetValue(levelIdKey, out LevelStaticData staticData)
+                ? staticData
                 : null;
 
+        public WindowConfig ForWindow(WindowID window) =>
+            _windowConfigs
+                .TryGetValue(window, out WindowConfig windowConfig)
+                ? windowConfig
+                : null;
     }
 }

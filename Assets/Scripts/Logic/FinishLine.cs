@@ -23,21 +23,22 @@ namespace Logic
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent<Player.Player>(out var player))
+            if (other.TryGetComponent<Player.Player>(out Player.Player player))
             {
                 _windowService.Open(WindowID.VictoryScreen);
-                
-                var coinReward = PlayerPrefs.GetInt(PlayerPrefsKeys.CoinKey) + 10;
+
+                int coinReward = PlayerPrefs.GetInt(PlayerPrefsKeys.CoinKey) + 10;
                 PlayerPrefs.SetInt(PlayerPrefsKeys.CoinKey, coinReward);
 
-                var currentLevel = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelKey);
+                int currentLevel = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelKey);
 
                 if (currentLevel == 0)
                 {
                     currentLevel = 1;
                 }
-                PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelKey , currentLevel + 1);
-                
+
+                PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelKey, currentLevel + 1);
+
                 Invoke(nameof(StopLevelMovement), 2f);
             }
         }

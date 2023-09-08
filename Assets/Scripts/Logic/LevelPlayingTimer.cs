@@ -26,17 +26,17 @@ namespace Logic
 
         public void StartLevelPlayingCoroutine()
         {
-            var levelData = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelKey);
+            int levelData = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelKey);
 
             if (levelData == 0)
             {
                 levelData = 1;
             }
-            
-            var timeToPlay = _staticData.ForLevel(levelData).timeToPlay;
+
+            float timeToPlay = _staticData.ForLevel(levelData).timeToPlay;
             StartCoroutine(LevelTimePlaying(timeToPlay));
         }
-        
+
         private IEnumerator LevelTimePlaying(float waitTime)
         {
             yield return new WaitForSecondsRealtime(waitTime);
@@ -45,7 +45,7 @@ namespace Logic
 
         private void FinishGame()
         {
-            var finishLine = _factory.CreateFinishLine(new Vector3(0, 4.08f, 75f)).GetComponent<FinishLine>();
+            FinishLine finishLine = _factory.CreateFinishLine(new Vector3(0, 4.08f, 75f)).GetComponent<FinishLine>();
             finishLine.InitFinishLine(_windowService, _objectMover);
         }
     }

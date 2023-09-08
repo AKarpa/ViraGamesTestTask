@@ -35,7 +35,7 @@ namespace Player
                         if (_isDragging)
                         {
                             float deltaX = touch.position.x - _startPos.x;
-                            var position = t.position;
+                            Vector3 position = t.position;
                             float newX = position.x + deltaX * Speed * Time.deltaTime;
                             
                             newX = Mathf.Clamp(newX, MinX, MaxX);
@@ -66,7 +66,7 @@ namespace Player
                 if (_isDragging)
                 {
                     float deltaX = Input.mousePosition.x - _startPos.x;
-                    var position = t.position;
+                    Vector3 position = t.position;
                     float newX = position.x + deltaX * Speed * Time.deltaTime;
                     newX = Mathf.Clamp(newX, MinX, MaxX);
                     position = new Vector3(newX, position.y, position.z);

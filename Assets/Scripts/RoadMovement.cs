@@ -17,7 +17,7 @@ public class RoadMovement : MonoBehaviour
     private void Update()
     {
         _objectMover.UpdateObjectPosition(transform, Vector3.back);
-        
+
         if (Vector3.Distance(transform.position, endPoint.position) < threshold)
         {
             transform.position = startPoint.position;

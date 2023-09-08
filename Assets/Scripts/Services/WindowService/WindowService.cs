@@ -13,11 +13,11 @@ namespace Services.WindowService
         {
             _uiFactory = uiFactory;
         }
-        
+
         public void Open(WindowID windowID, Action windowAction = null)
         {
             _uiFactory.FindRootObject();
-            
+
             switch (windowID)
             {
                 case WindowID.Unknown:

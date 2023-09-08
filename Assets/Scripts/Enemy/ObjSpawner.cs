@@ -16,7 +16,7 @@ namespace Enemy
     {
         [SerializeField] private GameObject spawnSpotTransform;
         [SerializeField] private GameObject enemySpawnSpotTransform;
-    
+
         private IGameFactory _factory;
         private IStaticDataService _staticData;
         private IObjectGrouper _objectGrouper;
@@ -35,13 +35,13 @@ namespace Enemy
             _compareService = AllServices.Container.Single<ICompareObjectListsService>();
             _objectMover = AllServices.Container.Single<IObjectMover>();
 
-            var levelData = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelKey);
+            int levelData = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelKey);
 
             if (levelData == 0)
             {
                 levelData = 1;
             }
-        
+
             _levelData = _staticData.ForLevel(levelData);
             _upgradeWallPool = SpawnUpgradeWall();
             _enemySpotPool = SpawnEnemySpot();
@@ -56,7 +56,8 @@ namespace Enemy
 
             for (int i = 0; i < _levelData.upgradeWallAmount; i++)
             {
-                var upgradeWall = _factory.CreateUpgradeWall(spawnSpotTransform).GetComponent<UpgradeWall.UpgradeWall>();
+                UpgradeWall.UpgradeWall upgradeWall = _factory.CreateUpgradeWall(spawnSpotTransform)
+                    .GetComponent<UpgradeWall.UpgradeWall>();
                 upgradeWall.gameObject.SetActive(false);
                 newList.Add(upgradeWall);
             }
@@ -70,7 +71,7 @@ namespace Enemy
 
             for (int i = 0; i < _levelData.enemySpotsAmount; i++)
             {
-                var enemySpot = _factory.CreateEnemySpot(enemySpawnSpotTransform).GetComponent<EnemySpot>();
+                EnemySpot enemySpot = _factory.CreateEnemySpot(enemySpawnSpotTransform).GetComponent<EnemySpot>();
                 enemySpot.gameObject.SetActive(false);
                 newList.Add(enemySpot);
             }
@@ -80,13 +81,15 @@ namespace Enemy
 
         private UpgradeWall.UpgradeWall RequestUpgradeWall()
         {
-            foreach (var upgradeWall in _upgradeWallPool.Where(upgradeWall => !upgradeWall.gameObject.activeInHierarchy))
+            foreach (UpgradeWall.UpgradeWall upgradeWall in _upgradeWallPool.Where(upgradeWall =>
+                         !upgradeWall.gameObject.activeInHierarchy))
             {
                 upgradeWall.transform.position = spawnSpotTransform.transform.position;
                 return upgradeWall;
             }
-        
-            var newWall = _factory.CreateUpgradeWall(spawnSpotTransform).GetComponent<UpgradeWall.UpgradeWall>();
+
+            UpgradeWall.UpgradeWall newWall =
+                _factory.CreateUpgradeWall(spawnSpotTransform).GetComponent<UpgradeWall.UpgradeWall>();
             newWall.gameObject.SetActive(true);
             _upgradeWallPool.Add(newWall);
             return newWall;
@@ -94,24 +97,24 @@ namespace Enemy
 
         private EnemySpot RequestEnemySpot()
         {
-            foreach (var enemySpot in _enemySpotPool.Where(enemySpot => !enemySpot.gameObject.activeInHierarchy))
+            foreach (EnemySpot enemySpot in _enemySpotPool.Where(enemySpot => !enemySpot.gameObject.activeInHierarchy))
             {
                 enemySpot.transform.position = enemySpawnSpotTransform.transform.position;
                 return enemySpot;
             }
 
-            var newEnemySpot = _factory.CreateEnemySpot(enemySpawnSpotTransform).GetComponent<EnemySpot>();
-        
+            EnemySpot newEnemySpot = _factory.CreateEnemySpot(enemySpawnSpotTransform).GetComponent<EnemySpot>();
+
             newEnemySpot.gameObject.SetActive(true);
             _enemySpotPool.Add(newEnemySpot);
             return newEnemySpot;
         }
-    
+
         IEnumerator SpawnUpgradeWallCoroutine()
         {
             while (true)
             {
-                var wall = RequestUpgradeWall();
+                UpgradeWall.UpgradeWall wall = RequestUpgradeWall();
                 wall.InitUpgradeWall(_levelData, _objectMover);
                 wall.gameObject.SetActive(true);
                 yield return new WaitForSeconds(7f);
@@ -123,8 +126,8 @@ namespace Enemy
             while (true)
             {
                 yield return new WaitForSeconds(5f);
-                var enemySpot = RequestEnemySpot();
-                enemySpot.InitEnemySpot(_levelData, _factory,_objectGrouper, _compareService, _objectMover);
+                EnemySpot enemySpot = RequestEnemySpot();
+                enemySpot.InitEnemySpot(_levelData, _factory, _objectGrouper, _compareService, _objectMover);
                 enemySpot.transform.rotation = Quaternion.Euler(0f, -180f, 0f);
                 enemySpot.gameObject.SetActive(true);
             }

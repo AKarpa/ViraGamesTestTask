@@ -9,8 +9,8 @@ namespace Services.ObjectMover
 
         public void UpdateObjectPosition(Transform t, Vector3 direction)
         {
-            if(!isMoveAvailable) return;
-        
+            if (!isMoveAvailable) return;
+
             t.Translate(direction * speed * Time.deltaTime);
         }
 

@@ -2,8 +2,8 @@ using Infrastructure.Services;
 
 namespace Services.Input
 {
-  public interface IInputService : IService
-  {
-    bool OnClicked { get; }
-  }
+    public interface IInputService : IService
+    {
+        bool OnClicked { get; }
+    }
 }

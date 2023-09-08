@@ -17,7 +17,7 @@ namespace Infrastructure
             {
                 _instance = this;
                 DontDestroyOnLoad(this);
-                
+
                 _game = new Game(this, curtain);
                 _game.StateMachine.Enter<BootstrapState>();
             }

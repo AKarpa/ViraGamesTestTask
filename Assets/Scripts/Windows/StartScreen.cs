@@ -16,7 +16,7 @@ namespace Windows
 
             coinAmountText.text = PlayerPrefs.GetInt("Coin").ToString();
             Time.timeScale = 0;
-            
+
             objectMover.MoveAction(true);
             _levelTimePlayingCounter = GameObject.FindWithTag("GameLifeTime");
         }

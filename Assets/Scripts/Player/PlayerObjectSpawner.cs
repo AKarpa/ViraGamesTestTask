@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Factory;
 using Services.ObjectGrouper;
+using UnityEngine;
 
 namespace Player
 {
@@ -20,7 +21,7 @@ namespace Player
         {
             for (int i = 0; i < valueToAdd; i++)
             {
-                var playerObj = _gameFactory.CreatePlayerObject(_player.gameObject);
+                GameObject playerObj = _gameFactory.CreatePlayerObject(_player.gameObject);
                 _player.playerObjects.Add(playerObj.transform);
                 _player.UpdatePlayerCounterValue(_player.playerObjects.Count);
             }

@@ -9,7 +9,7 @@ namespace Windows
         public void InitDefeatScreen(IResetGameService resetGameService)
         {
             _resetGameService = resetGameService;
-            
+
             CloseButton.onClick.AddListener(ResetButtonAction);
         }
 

@@ -12,7 +12,7 @@ namespace UpgradeWall
         private int _triggerValue;
         private Action _triggerAction;
 
-        public void InitTrigger(WallType wallTypeValue,int value, string valueString, Action triggerAction = null)
+        public void InitTrigger(WallType wallTypeValue, int value, string valueString, Action triggerAction = null)
         {
             if (value > 0)
             {
@@ -27,7 +27,7 @@ namespace UpgradeWall
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent<Player.Player>(out var player))
+            if (other.TryGetComponent<Player.Player>(out Player.Player player))
             {
                 _triggerAction?.Invoke();
                 hologram.gameObject.SetActive(false);
@@ -37,7 +37,7 @@ namespace UpgradeWall
                         player.PlayerObjectSpawner.SpawnPlayerObject(_triggerValue);
                         break;
                     case WallType.MultiplyWall:
-                        var multiplyValue = player.playerObjects.Count * _triggerValue;
+                        int multiplyValue = player.playerObjects.Count * _triggerValue;
                         player.PlayerObjectSpawner.SpawnPlayerObject(multiplyValue);
                         break;
                 }

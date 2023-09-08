@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Enemy;
 using Services.ObjectMover;
 using Services.WindowService;
@@ -16,19 +17,19 @@ namespace Services.CompareObjectListsService
             _objectMover = objectMover;
             _windowService = windowService;
         }
-        
+
         public IEnumerator CompareLists(EnemySpot enemy, Player.Player player)
         {
             _objectMover.MoveAction(false);
 
-            var playerList = player.playerObjects;
-            var enemyList = enemy.enemySpotObjects;
+            List<Transform> playerList = player.playerObjects;
+            List<Transform> enemyList = enemy.enemySpotObjects;
 
-            var playerListCount = playerList.Count;
-            var enemyListCount = enemyList.Count;
+            int playerListCount = playerList.Count;
+            int enemyListCount = enemyList.Count;
 
-            var timeBetweenDisable = enemyListCount <= 10 ? 0.1f : .03f;
-            
+            float timeBetweenDisable = enemyListCount <= 10 ? 0.1f : .03f;
+
             for (int i = 0; i < enemyList.Count; i++)
             {
                 if (playerListCount <= 0)
@@ -37,7 +38,7 @@ namespace Services.CompareObjectListsService
                     player.gameObject.SetActive(false);
                     yield break;
                 }
-                
+
                 playerList[i].gameObject.SetActive(false);
                 enemyList[i].gameObject.SetActive(false);
 
@@ -46,7 +47,7 @@ namespace Services.CompareObjectListsService
 
                 enemy.UpdateEnemySpotCounter(enemyListCount);
                 player.UpdatePlayerCounterValue(playerListCount);
-                
+
                 yield return new WaitForSeconds(timeBetweenDisable);
             }
 

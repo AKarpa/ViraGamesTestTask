@@ -22,20 +22,20 @@ namespace UpgradeWall
 
         private void SetupWallTriggers(LevelStaticData levelStaticData)
         {
-            var randomPlusValue = Random.Range(levelStaticData.upgradePlusAmountBounds.x,
+            int randomPlusValue = Random.Range(levelStaticData.upgradePlusAmountBounds.x,
                 levelStaticData.upgradePlusAmountBounds.y + 1);
-            var randomMultiplyValue = Random.Range(levelStaticData.upgradeMultiplyAmountBounds.x,
+            int randomMultiplyValue = Random.Range(levelStaticData.upgradeMultiplyAmountBounds.x,
                 levelStaticData.upgradeMultiplyAmountBounds.y + 1);
-            var resultPlusValue = Mathf.RoundToInt(randomPlusValue / 5.0f) * 5;
+            int resultPlusValue = Mathf.RoundToInt(randomPlusValue / 5.0f) * 5;
 
-            foreach (var wall in wallTriggers)
+            foreach (WallTrigger wall in wallTriggers)
             {
-                var randomValue = Random.Range(0, 2);
+                int randomValue = Random.Range(0, 2);
                 wall
                     .InitTrigger(randomValue == 0 ? WallType.PlusWall : WallType.MultiplyWall,
-                    randomValue == 0 ? resultPlusValue : randomMultiplyValue,
-                    randomValue == 0 ? "+" + resultPlusValue : "x" + randomMultiplyValue,
-                    DisableTriggers);
+                        randomValue == 0 ? resultPlusValue : randomMultiplyValue,
+                        randomValue == 0 ? "+" + resultPlusValue : "x" + randomMultiplyValue,
+                        DisableTriggers);
             }
         }
 
@@ -51,15 +51,15 @@ namespace UpgradeWall
 
         private void EnableTriggers()
         {
-            foreach (var trigger in wallTriggers)
+            foreach (WallTrigger trigger in wallTriggers)
             {
                 trigger.GetComponent<Collider>().enabled = true;
             }
         }
-        
+
         private void DisableTriggers()
         {
-            foreach (var trigger in wallTriggers)
+            foreach (WallTrigger trigger in wallTriggers)
             {
                 trigger.GetComponent<Collider>().enabled = false;
             }
