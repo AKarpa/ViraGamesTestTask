@@ -10,7 +10,7 @@ namespace Windows
         {
             _resetGameService = resetGameService;
 
-            CloseButton.onClick.AddListener(ResetButtonAction);
+            closeButton.onClick.AddListener(ResetButtonAction);
         }
 
         private void ResetButtonAction()

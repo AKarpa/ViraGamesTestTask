@@ -54,7 +54,7 @@ namespace Enemy
         {
             List<UpgradeWall.UpgradeWall> newList = new List<UpgradeWall.UpgradeWall>();
 
-            for (int i = 0; i < _levelData.upgradeWallAmount; i++)
+            for (int i = 0; i < _levelData.UpgradeWallAmount; i++)
             {
                 UpgradeWall.UpgradeWall upgradeWall = _factory.CreateUpgradeWall(spawnSpotTransform)
                     .GetComponent<UpgradeWall.UpgradeWall>();
@@ -69,7 +69,7 @@ namespace Enemy
         {
             List<EnemySpot> newList = new List<EnemySpot>();
 
-            for (int i = 0; i < _levelData.enemySpotsAmount; i++)
+            for (int i = 0; i < _levelData.EnemySpotsAmount; i++)
             {
                 EnemySpot enemySpot = _factory.CreateEnemySpot(enemySpawnSpotTransform).GetComponent<EnemySpot>();
                 enemySpot.gameObject.SetActive(false);

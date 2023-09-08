@@ -22,8 +22,8 @@ namespace Services.CompareObjectListsService
         {
             _objectMover.MoveAction(false);
 
-            List<Transform> playerList = player.playerObjects;
-            List<Transform> enemyList = enemy.enemySpotObjects;
+            List<Transform> playerList = player.PlayerObjects;
+            List<Transform> enemyList = enemy.EnemySpotObjects;
 
             int playerListCount = playerList.Count;
             int enemyListCount = enemyList.Count;

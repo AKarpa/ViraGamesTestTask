@@ -4,24 +4,24 @@ namespace Services.ObjectMover
 {
     public class ObjectMover : IObjectMover
     {
-        private float speed = 10f;
-        private bool isMoveAvailable;
+        private bool _isMoveAvailable;
+        private const float Speed = 10f;
 
         public void UpdateObjectPosition(Transform t, Vector3 direction)
         {
-            if (!isMoveAvailable) return;
+            if (!_isMoveAvailable) return;
 
-            t.Translate(direction * speed * Time.deltaTime);
+            t.Translate(direction * Speed * Time.deltaTime);
         }
 
         public void MoveAction(bool isAvailable)
         {
-            isMoveAvailable = isAvailable;
+            _isMoveAvailable = isAvailable;
         }
 
         public void MoveTowardsToObject(Transform t, Vector3 target)
         {
-            t.position = Vector3.MoveTowards(t.position, target, speed * Time.deltaTime);
+            t.position = Vector3.MoveTowards(t.position, target, Speed * Time.deltaTime);
         }
     }
 }

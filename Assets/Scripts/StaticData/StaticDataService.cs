@@ -17,7 +17,7 @@ namespace StaticData
         {
             _levels = Resources
                 .LoadAll<LevelStaticData>(ConfigsLevelStaticData)
-                .ToDictionary(x => x.levelIdKey, x => x);
+                .ToDictionary(x => x.LevelIdKey, x => x);
 
             _windowConfigs = Resources.Load<WindowStaticData>(ConfigsWindowStaticData).Configs
                 .ToDictionary(x => x.WindowID, x => x);

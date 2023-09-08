@@ -10,19 +10,16 @@ namespace Player
 {
     public class Player : MonoBehaviour
     {
-        public List<Transform> playerObjects;
-
         [SerializeField] private Counter counter;
 
         private IInputService _inputService;
         private IObjectGrouper _objectGrouper;
         private PlayerMover _playerMover;
         private IGameFactory _gameFactory;
-        private PlayerObjectSpawner _playerObjectSpawner;
 
-        private SphereCollider _sphereCollider;
-        public PlayerObjectSpawner PlayerObjectSpawner => _playerObjectSpawner;
-        public SphereCollider SphereCollider => _sphereCollider;
+        public PlayerObjectSpawner PlayerObjectSpawner { get; private set; }
+        public SphereCollider SphereCollider { get; private set; }
+        public List<Transform> PlayerObjects { get; } = new();
 
         private void Awake()
         {
@@ -30,15 +27,15 @@ namespace Player
             _objectGrouper = AllServices.Container.Single<IObjectGrouper>();
             _gameFactory = AllServices.Container.Single<IGameFactory>();
 
-            _sphereCollider = gameObject.AddComponent<SphereCollider>();
+            SphereCollider = gameObject.AddComponent<SphereCollider>();
 
             _playerMover = new PlayerMover(_inputService);
-            _playerObjectSpawner = new PlayerObjectSpawner(this, _gameFactory, _objectGrouper);
+            PlayerObjectSpawner = new PlayerObjectSpawner(this, _gameFactory, _objectGrouper);
 
-            _objectGrouper.GroupObjects(playerObjects, .5f);
-            _objectGrouper.CalculateGroupColliderSize(playerObjects, _sphereCollider);
+            _objectGrouper.GroupObjects(PlayerObjects, .5f);
+            _objectGrouper.CalculateGroupColliderSize(PlayerObjects, SphereCollider);
 
-            UpdatePlayerCounterValue(playerObjects.Count);
+            UpdatePlayerCounterValue(PlayerObjects.Count);
         }
 
         private void Update()

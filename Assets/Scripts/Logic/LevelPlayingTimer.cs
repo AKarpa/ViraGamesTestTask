@@ -33,7 +33,7 @@ namespace Logic
                 levelData = 1;
             }
 
-            float timeToPlay = _staticData.ForLevel(levelData).timeToPlay;
+            float timeToPlay = _staticData.ForLevel(levelData).TimeToPlay;
             StartCoroutine(LevelTimePlaying(timeToPlay));
         }
 

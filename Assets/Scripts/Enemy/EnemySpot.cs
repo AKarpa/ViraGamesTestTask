@@ -11,8 +11,6 @@ namespace Enemy
 {
     public class EnemySpot : MonoBehaviour
     {
-        public List<Transform> enemySpotObjects = new List<Transform>();
-
         [SerializeField] private EnemySpotTrigger enemySpotTrigger;
         [SerializeField] private Counter counter;
 
@@ -24,6 +22,8 @@ namespace Enemy
         private IObjectGrouper _objectGrouper;
         private ICompareObjectListsService _compareObjectListsService;
         private IObjectMover _objectMover;
+        
+        public List<Transform> EnemySpotObjects { get; } = new();
 
         public void InitEnemySpot(LevelStaticData levelStaticData, IGameFactory gameFactory,
             IObjectGrouper objectGrouper, ICompareObjectListsService compareObjectListsService,
@@ -38,7 +38,7 @@ namespace Enemy
             GenerateEnemySpotObjects();
             enemySpotTrigger.InitEnemySpotTrigger(this, _compareObjectListsService);
 
-            UpdateEnemySpotCounter(enemySpotObjects.Count);
+            UpdateEnemySpotCounter(EnemySpotObjects.Count);
             _isFighting = false;
         }
 
@@ -65,10 +65,10 @@ namespace Enemy
 
         private void GenerateEnemySpotObjects()
         {
-            int randomEnemyAmount = Random.Range(_levelStaticData.enemyAmountBounds.x,
-                _levelStaticData.enemyAmountBounds.y + 1);
+            int randomEnemyAmount = Random.Range(_levelStaticData.EnemyAmountBounds.x,
+                _levelStaticData.EnemyAmountBounds.y + 1);
 
-            int diffAmount = enemySpotObjects.Count - randomEnemyAmount;
+            int diffAmount = EnemySpotObjects.Count - randomEnemyAmount;
             if (diffAmount < 0)
                 diffAmount = -(diffAmount);
 
@@ -76,7 +76,7 @@ namespace Enemy
             {
                 GameObject newEnemyObj = _gameFactory.CreateEnemyObject(gameObject);
                 newEnemyObj.gameObject.SetActive(false);
-                enemySpotObjects.Add(newEnemyObj.transform);
+                EnemySpotObjects.Add(newEnemyObj.transform);
             }
 
             ActivateEnemies(randomEnemyAmount);
@@ -84,14 +84,14 @@ namespace Enemy
 
         private void ActivateEnemies(int randomEnemyAmount)
         {
-            if (randomEnemyAmount > enemySpotObjects.Count) return;
+            if (randomEnemyAmount > EnemySpotObjects.Count) return;
 
             for (int i = 0; i < randomEnemyAmount; i++)
             {
-                enemySpotObjects[i].gameObject.SetActive(true);
+                EnemySpotObjects[i].gameObject.SetActive(true);
             }
 
-            _objectGrouper.GroupObjects(enemySpotObjects, .5f);
+            _objectGrouper.GroupObjects(EnemySpotObjects, .5f);
         }
     }
 }

@@ -22,10 +22,10 @@ namespace UpgradeWall
 
         private void SetupWallTriggers(LevelStaticData levelStaticData)
         {
-            int randomPlusValue = Random.Range(levelStaticData.upgradePlusAmountBounds.x,
-                levelStaticData.upgradePlusAmountBounds.y + 1);
-            int randomMultiplyValue = Random.Range(levelStaticData.upgradeMultiplyAmountBounds.x,
-                levelStaticData.upgradeMultiplyAmountBounds.y + 1);
+            int randomPlusValue = Random.Range(levelStaticData.UpgradePlusAmountBounds.x,
+                levelStaticData.UpgradePlusAmountBounds.y + 1);
+            int randomMultiplyValue = Random.Range(levelStaticData.UpgradeMultiplyAmountBounds.x,
+                levelStaticData.UpgradeMultiplyAmountBounds.y + 1);
             int resultPlusValue = Mathf.RoundToInt(randomPlusValue / 5.0f) * 5;
 
             foreach (WallTrigger wall in wallTriggers)

@@ -5,16 +5,16 @@ namespace Windows
 {
     public abstract class WindowBase : MonoBehaviour
     {
-        public Button CloseButton;
+        [SerializeField] protected Button closeButton;
 
         private void Awake()
         {
             OnAwake();
         }
 
-        protected virtual void OnAwake()
+        private void OnAwake()
         {
-            CloseButton.onClick.AddListener(() => Destroy(gameObject));
+            closeButton.onClick.AddListener(() => Destroy(gameObject));
         }
     }
 }

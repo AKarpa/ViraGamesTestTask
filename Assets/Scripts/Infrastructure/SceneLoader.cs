@@ -18,7 +18,7 @@ namespace Infrastructure
         public void Reload(string name, Action onLoaded = null) =>
             _coroutineRunner.StartCoroutine(ReloadScene(name, onLoaded));
 
-        public IEnumerator LoadScene(string nextScene, Action onLoaded = null)
+        private static IEnumerator LoadScene(string nextScene, Action onLoaded = null)
         {
             if (SceneManager.GetActiveScene().name == nextScene)
             {
@@ -34,7 +34,7 @@ namespace Infrastructure
             onLoaded?.Invoke();
         }
 
-        public IEnumerator ReloadScene(string reloadSceneName, Action onLoaded = null)
+        private static IEnumerator ReloadScene(string reloadSceneName, Action onLoaded = null)
         {
             AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(reloadSceneName);
 

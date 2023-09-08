@@ -13,7 +13,7 @@ namespace Enemy
             IsFightingAnimation(true);
         }
 
-        public void IsFightingAnimation(bool isPlaying)
+        private void IsFightingAnimation(bool isPlaying)
         {
             animator.SetBool(IsFighting, isPlaying);
         }

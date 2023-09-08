@@ -12,7 +12,7 @@ namespace Windows
 
         public void InitStartScreen(IObjectMover objectMover)
         {
-            CloseButton.onClick.AddListener(StartGameClickAction);
+            closeButton.onClick.AddListener(StartGameClickAction);
 
             coinAmountText.text = PlayerPrefs.GetInt("Coin").ToString();
             Time.timeScale = 0;
