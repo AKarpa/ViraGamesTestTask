@@ -38,11 +38,10 @@ namespace Infrastructure.States
         {
             _windowService.Open(WindowID.StartScreen);
 
-            GameObject playerSpot = _gameFactory.CreatePlayerSpot(GameObject.FindWithTag(InitialPointTag));
-            GameObject playerObj = _gameFactory.CreatePlayerObject(playerSpot);
-            Player.Player player = playerSpot.GetComponent<Player.Player>();
-            player.PlayerObjects.Add(playerObj.transform);
-            player.UpdatePlayerCounterValue(1);
+            Player.Player playerSpot = _gameFactory.CreatePlayerSpot(GameObject.FindWithTag(InitialPointTag));
+            GameObject playerObj = _gameFactory.CreatePlayerObject(playerSpot.gameObject);
+            playerSpot.PlayerObjects.Add(playerObj.transform);
+            playerSpot.UpdatePlayerCounterValue(1);
 
             _stateMachine.Enter<GameLoopState>();
         }

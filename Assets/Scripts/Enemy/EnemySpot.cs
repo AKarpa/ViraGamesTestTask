@@ -75,7 +75,7 @@ namespace Enemy
             for (int i = 0; i < diffAmount; i++)
             {
                 GameObject newEnemyObj = _gameFactory.CreateEnemyObject(gameObject);
-                newEnemyObj.gameObject.SetActive(false);
+                newEnemyObj.SetActive(false);
                 EnemySpotObjects.Add(newEnemyObj.transform);
             }
 

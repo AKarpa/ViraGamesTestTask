@@ -45,7 +45,7 @@ namespace Logic
 
         private void FinishGame()
         {
-            FinishLine finishLine = _factory.CreateFinishLine(new Vector3(0, 4.08f, 75f)).GetComponent<FinishLine>();
+            FinishLine finishLine = _factory.CreateFinishLine(new Vector3(0, 4.08f, 75f));
             finishLine.InitFinishLine(_windowService, _objectMover);
         }
     }

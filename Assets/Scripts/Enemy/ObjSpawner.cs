@@ -56,8 +56,7 @@ namespace Enemy
 
             for (int i = 0; i < _levelData.UpgradeWallAmount; i++)
             {
-                UpgradeWall.UpgradeWall upgradeWall = _factory.CreateUpgradeWall(spawnSpotTransform)
-                    .GetComponent<UpgradeWall.UpgradeWall>();
+                UpgradeWall.UpgradeWall upgradeWall = _factory.CreateUpgradeWall(spawnSpotTransform);
                 upgradeWall.gameObject.SetActive(false);
                 newList.Add(upgradeWall);
             }
@@ -71,7 +70,7 @@ namespace Enemy
 
             for (int i = 0; i < _levelData.EnemySpotsAmount; i++)
             {
-                EnemySpot enemySpot = _factory.CreateEnemySpot(enemySpawnSpotTransform).GetComponent<EnemySpot>();
+                EnemySpot enemySpot = _factory.CreateEnemySpot(enemySpawnSpotTransform);
                 enemySpot.gameObject.SetActive(false);
                 newList.Add(enemySpot);
             }
@@ -89,7 +88,7 @@ namespace Enemy
             }
 
             UpgradeWall.UpgradeWall newWall =
-                _factory.CreateUpgradeWall(spawnSpotTransform).GetComponent<UpgradeWall.UpgradeWall>();
+                _factory.CreateUpgradeWall(spawnSpotTransform);
             newWall.gameObject.SetActive(true);
             _upgradeWallPool.Add(newWall);
             return newWall;
@@ -103,7 +102,7 @@ namespace Enemy
                 return enemySpot;
             }
 
-            EnemySpot newEnemySpot = _factory.CreateEnemySpot(enemySpawnSpotTransform).GetComponent<EnemySpot>();
+            EnemySpot newEnemySpot = _factory.CreateEnemySpot(enemySpawnSpotTransform);
 
             newEnemySpot.gameObject.SetActive(true);
             _enemySpotPool.Add(newEnemySpot);
