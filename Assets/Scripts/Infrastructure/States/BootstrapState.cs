@@ -1,4 +1,5 @@
-﻿using Infrastructure.AssetManagement;
+﻿using Analytics;
+using Infrastructure.AssetManagement;
 using Infrastructure.Factory;
 using Infrastructure.Services;
 using Services;
@@ -42,16 +43,19 @@ namespace Infrastructure.States
             RegisterStaticData();
 
             _services.RegisterSingle(InputService());
+            _services.RegisterSingle<IFirebaseAnalyticsService>(new FirebaseAnalyticsService());
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
             _services.RegisterSingle<IObjectGrouper>(new ObjectGrouper());
             _services.RegisterSingle<IObjectMover>(new ObjectMover());
             _services.RegisterSingle<IResetGameService>(new ResetGameService(_stateMachine));
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
             _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IStaticDataService>(),
-                _services.Single<IObjectMover>(), _services.Single<IResetGameService>()));
+                _services.Single<IObjectMover>(), _services.Single<IResetGameService>(),
+                _services.Single<IFirebaseAnalyticsService>()));
             _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>()));
             _services.RegisterSingle<ICompareObjectListsService>(
-                new CompareObjectListsService(_services.Single<IObjectMover>(), _services.Single<IWindowService>()));
+                new CompareObjectListsService(_services.Single<IObjectMover>(), _services.Single<IWindowService>(),
+                    _services.Single<IFirebaseAnalyticsService>()));
         }
 
         private void RegisterStaticData()

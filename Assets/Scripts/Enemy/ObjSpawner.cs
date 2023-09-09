@@ -9,6 +9,7 @@ using Services.ObjectGrouper;
 using Services.ObjectMover;
 using StaticData;
 using UnityEngine;
+using Utils;
 
 namespace Enemy
 {
@@ -35,12 +36,7 @@ namespace Enemy
             _compareService = AllServices.Container.Single<ICompareObjectListsService>();
             _objectMover = AllServices.Container.Single<IObjectMover>();
 
-            int levelData = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelKey);
-
-            if (levelData == 0)
-            {
-                levelData = 1;
-            }
+            int levelData = PlayerPrefsUtils.GetLevelData();
 
             _levelData = _staticData.ForLevel(levelData);
             _upgradeWallPool = SpawnUpgradeWall();

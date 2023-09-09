@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Analytics;
 using Infrastructure.AssetManagement;
 using Infrastructure.Factory;
 using Infrastructure.Services;
@@ -6,6 +7,7 @@ using Services.ObjectMover;
 using Services.WindowService;
 using StaticData;
 using UnityEngine;
+using Utils;
 
 namespace Logic
 {
@@ -15,6 +17,7 @@ namespace Logic
         private IStaticDataService _staticData;
         private IWindowService _windowService;
         private IObjectMover _objectMover;
+        private IFirebaseAnalyticsService _firebaseAnalyticsService;
 
         private void Awake()
         {
@@ -22,18 +25,12 @@ namespace Logic
             _staticData = AllServices.Container.Single<IStaticDataService>();
             _windowService = AllServices.Container.Single<IWindowService>();
             _objectMover = AllServices.Container.Single<IObjectMover>();
+            _firebaseAnalyticsService = AllServices.Container.Single<IFirebaseAnalyticsService>();
         }
 
         public void StartLevelPlayingCoroutine()
         {
-            int levelData = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelKey);
-
-            if (levelData == 0)
-            {
-                levelData = 1;
-            }
-
-            float timeToPlay = _staticData.ForLevel(levelData).TimeToPlay;
+            float timeToPlay = _staticData.ForLevel(PlayerPrefsUtils.GetLevelData()).TimeToPlay;
             StartCoroutine(LevelTimePlaying(timeToPlay));
         }
 
@@ -46,7 +43,7 @@ namespace Logic
         private void FinishGame()
         {
             FinishLine finishLine = _factory.CreateFinishLine(new Vector3(0, 4.08f, 75f));
-            finishLine.InitFinishLine(_windowService, _objectMover);
+            finishLine.InitFinishLine(_windowService, _objectMover, _firebaseAnalyticsService);
         }
     }
 }

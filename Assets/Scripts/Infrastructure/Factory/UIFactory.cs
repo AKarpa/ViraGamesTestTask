@@ -1,4 +1,5 @@
 using Windows;
+using Analytics;
 using Services;
 using Services.ObjectMover;
 using Services.WindowService;
@@ -16,22 +17,24 @@ namespace Infrastructure.Factory
         private readonly IStaticDataService _staticData;
         private readonly IObjectMover _objectMover;
         private readonly IResetGameService _resetGameService;
+        private readonly IFirebaseAnalyticsService _firebaseAnalyticsService;
 
         private Transform _uiRoot;
 
         public UIFactory(IStaticDataService staticDataService, IObjectMover objectMover,
-            IResetGameService resetGameService)
+            IResetGameService resetGameService, IFirebaseAnalyticsService firebaseAnalyticsService)
         {
             _staticData = staticDataService;
             _objectMover = objectMover;
             _resetGameService = resetGameService;
+            _firebaseAnalyticsService = firebaseAnalyticsService;
         }
 
         public void CreateStartScreen()
         {
             WindowConfig config = _staticData.ForWindow(WindowID.StartScreen);
             StartScreen startScreen = Object.Instantiate(config.Prefab, _uiRoot).GetComponent<StartScreen>();
-            startScreen.InitStartScreen(_objectMover);
+            startScreen.InitStartScreen(_objectMover, _firebaseAnalyticsService);
         }
 
         public void CreateDefeatScreen()

@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Analytics;
 using Enemy;
+using Infrastructure.AssetManagement;
 using Services.ObjectMover;
 using Services.WindowService;
 using UnityEngine;
+using Utils;
 
 namespace Services.CompareObjectListsService
 {
@@ -11,9 +14,12 @@ namespace Services.CompareObjectListsService
     {
         private readonly IObjectMover _objectMover;
         private readonly IWindowService _windowService;
+        private readonly IFirebaseAnalyticsService _firebaseAnalyticsService;
 
-        public CompareObjectListsService(IObjectMover objectMover, IWindowService windowService)
+        public CompareObjectListsService(IObjectMover objectMover, IWindowService windowService,
+            IFirebaseAnalyticsService firebaseAnalyticsService)
         {
+            _firebaseAnalyticsService = firebaseAnalyticsService;
             _objectMover = objectMover;
             _windowService = windowService;
         }
@@ -36,6 +42,10 @@ namespace Services.CompareObjectListsService
                 {
                     _windowService.Open(WindowID.DefeatScreen);
                     player.gameObject.SetActive(false);
+
+                    _firebaseAnalyticsService.LogEvent(FirebaseEventsKey.LevelComplete, FirebaseEventsKey.LevelNumber,
+                        PlayerPrefsUtils.GetLevelData());
+
                     yield break;
                 }
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "43461936790",
+    "project_id": "viragamestest-52cbd",
+    "storage_bucket": "viragamestest-52cbd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43461936790:android:078b3bd1225a14053d64b7",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.ViraGamesTest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO_WAbGEFBwp5MRQ1jSt12Ca6WCO7aB3M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

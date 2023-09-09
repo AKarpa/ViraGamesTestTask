@@ -1,7 +1,9 @@
-﻿using Infrastructure.AssetManagement;
+﻿using Analytics;
+using Infrastructure.AssetManagement;
 using Services.ObjectMover;
 using Services.WindowService;
 using UnityEngine;
+using Utils;
 
 namespace Logic
 {
@@ -9,9 +11,12 @@ namespace Logic
     {
         private IWindowService _windowService;
         private IObjectMover _objectMover;
+        private IFirebaseAnalyticsService _firebaseAnalyticsService;
 
-        public void InitFinishLine(IWindowService windowService, IObjectMover objectMover)
+        public void InitFinishLine(IWindowService windowService, IObjectMover objectMover,
+            IFirebaseAnalyticsService firebaseAnalyticsService)
         {
+            _firebaseAnalyticsService = firebaseAnalyticsService;
             _objectMover = objectMover;
             _windowService = windowService;
         }
@@ -29,12 +34,10 @@ namespace Logic
             int coinReward = PlayerPrefs.GetInt(PlayerPrefsKeys.CoinKey) + 10;
             PlayerPrefs.SetInt(PlayerPrefsKeys.CoinKey, coinReward);
 
-            int currentLevel = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelKey);
+            int currentLevel = PlayerPrefsUtils.GetLevelData();
 
-            if (currentLevel == 0)
-            {
-                currentLevel = 1;
-            }
+            _firebaseAnalyticsService.LogEvent(FirebaseEventsKey.LevelComplete, FirebaseEventsKey.LevelNumber,
+                currentLevel);
 
             PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelKey, currentLevel + 1);
 
